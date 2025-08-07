@@ -8,10 +8,10 @@ import { FormItem, Form } from "@/components/ui/Form";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import AuthService from "@/services/authService";
 import ActionLink from "@/components/shared/ActionLink";
 import Steps from "@/components/ui/Steps";
 import { HiCheckCircle } from "react-icons/hi"; // ✅ Import success icon
+import AuthService from "@/services/AuthService";
 
 const OTP_LENGTH = 6;
 
@@ -57,7 +57,11 @@ const ResetPasswordForm = () => {
     setStep(1);
   };
 
-  const onSubmit = async (values: { otp: string; password: string; passwordConfirmation: string }) => {
+  const onSubmit = async (values: {
+    otp: string;
+    password: string;
+    passwordConfirmation: string;
+  }) => {
     setSubmitting(true);
     setErrorMessage(null);
 
@@ -92,10 +96,10 @@ const ResetPasswordForm = () => {
       {/* ✅ Success Message */}
       {successMessage && (
         <div className="mb-4">
-         <Alert type="success">{successMessage}</Alert>
+          <Alert type="success">{successMessage}</Alert>
         </div>
       )}
-      
+
       <h2 className="text-center text-lg font-semibold mb-4">Reset Password</h2>
 
       {/* ✅ Steps Navigation */}
@@ -104,24 +108,25 @@ const ResetPasswordForm = () => {
         <Steps.Item title="Reset Password" />
       </Steps>
 
-      
-
-      <Form  className="mt-10" onSubmit={handleSubmit(onSubmit)}>
+      <Form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
         {step === 0 && (
           <>
             {/* ✅ OTP Field */}
-            <FormItem invalid={Boolean(errors.otp)} errorMessage={errors.otp?.message}>
+            <FormItem
+              invalid={Boolean(errors.otp)}
+              errorMessage={errors.otp?.message}
+            >
               <Controller
                 name="otp"
                 control={control}
                 render={({ field }) => (
-                  <OtpInput  length={OTP_LENGTH} {...field} />
+                  <OtpInput length={OTP_LENGTH} {...field} />
                 )}
               />
             </FormItem>
 
             {/* ✅ Next Button */}
-            <Button  variant="solid" type="button" onClick={validateOTP}>
+            <Button variant="solid" type="button" onClick={validateOTP}>
               Next
             </Button>
           </>
@@ -138,7 +143,13 @@ const ResetPasswordForm = () => {
               <Controller
                 name="password"
                 control={control}
-                render={({ field }) => <Input type="password" placeholder="Enter new password" {...field} />}
+                render={({ field }) => (
+                  <Input
+                    type="password"
+                    placeholder="Enter new password"
+                    {...field}
+                  />
+                )}
               />
             </FormItem>
 
@@ -151,12 +162,18 @@ const ResetPasswordForm = () => {
               <Controller
                 name="passwordConfirmation"
                 control={control}
-                render={({ field }) => <Input type="password" placeholder="Confirm password" {...field} />}
+                render={({ field }) => (
+                  <Input
+                    type="password"
+                    placeholder="Confirm password"
+                    {...field}
+                  />
+                )}
               />
             </FormItem>
 
             {/* ✅ Submit Button */}
-            <Button  loading={isSubmitting} variant="solid" type="submit">
+            <Button loading={isSubmitting} variant="solid" type="submit">
               {isSubmitting ? "Resetting Password..." : "Reset Password"}
             </Button>
           </>
@@ -166,7 +183,11 @@ const ResetPasswordForm = () => {
       {/* ✅ Back to Sign-in Link */}
       <div className="mt-4 text-center">
         <span>Back to </span>
-        <ActionLink to="/sign-in" className="heading-text font-bold" themeColor={false}>
+        <ActionLink
+          to="/sign-in"
+          className="heading-text font-bold"
+          themeColor={false}
+        >
           Sign in
         </ActionLink>
       </div>

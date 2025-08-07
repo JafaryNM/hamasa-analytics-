@@ -1,0 +1,1 @@
+import{j as s,t as g,a8 as m}from"./index-BmTDuvZb.js";const i="/img/logo/",d=o=>{const{type:c="full",mode:r="light",className:l,imgClass:t,style:a,logoWidth:e="auto"}=o;return s.jsx("div",{className:g("logo",l),style:{...a,width:e},children:s.jsx("img",{className:t,src:`${i}logo.jpeg`,alt:`${m} logo`})})};export{d as L};

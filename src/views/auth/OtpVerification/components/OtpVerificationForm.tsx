@@ -5,12 +5,12 @@ import { FormItem, Form } from "@/components/ui/Form";
 import OtpInput from "@/components/shared/OtpInput";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OTP_LEGNTH, OtpFormSchema, OtpFormSchemaType } from "@/schemas/OTPFormSchema";
-import authService from "@/services/authService";
 
 // ✅ Toast & Notification
 import toast from "@/components/ui/toast";
 import Notification from "@/components/ui/Notification";
+import { OtpFormSchema } from "@/schemas/OtpFormSchema";
+import AuthService from "@/services/AuthService";
 
 interface OtpVerificationFormProps {
   phone: string;
@@ -41,7 +41,7 @@ const OtpVerificationForm = ({ phone }: OtpVerificationFormProps) => {
     setSubmitting(true);
 
     try {
-      const response = await authService.verifyAccount({
+      const response = await AuthService.verifyAccount({
         phone,
         token: values.otp,
       });

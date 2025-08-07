@@ -1,0 +1,1 @@
+import{j as i}from"./index-BmTDuvZb.js";import{I as m}from"./FormContainer-DAIJ54eo.js";import{d as f}from"./debounce-BDIv-DRu.js";function b(n,e,t){return f(n,e,t)}const D=n=>{const{wait:e=500,ref:t,...c}=n;function a(o){var u;(u=n.onChange)==null||u.call(n,o)}const r=b(a,e),s=o=>{r(o)};return i.jsx(m,{ref:t,...c,onChange:s})};export{D};

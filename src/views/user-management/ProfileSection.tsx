@@ -19,7 +19,7 @@ import userService from "@/services/userService";
 import { Form, FormItem } from "@/components/ui/Form";
 import { Dialog, Input, Select, Tag } from "@/components/ui";
 import { GiPadlock } from "react-icons/gi";
-import authService from "@/services/authService";
+import AuthService from "@/services/AuthService";
 
 type CustomerInfoFieldProps = {
   title?: string;
@@ -172,8 +172,7 @@ const ProfileSection = ({ data, reloadFunc }: ProfileSectionProps) => {
 
   const handleResetPassword = () => {
     setDeleteRecord({ ...deleteRecord, loading: true });
-    authService
-      .resetPassword(data?.uuid ?? "")
+    AuthService.resetPassword(data?.uuid ?? "")
       .then((res) => {
         setResetRecord({ loading: false, showModal: false });
         toast.push(
@@ -492,7 +491,8 @@ const ProfileSection = ({ data, reloadFunc }: ProfileSectionProps) => {
             {" "}
             This action is irreversible! Deleting{" "}
             <span className="font-semibold">
-              {deleteRecord.record?.firstName} {deleteRecord.record?.lastName}{" "}
+              {deleteRecord.record?.firstName}{" "}
+              {deleteRecord.record?.lastName}{" "}
             </span>
             will permanently be removed from the system. Are you sure you want
             to proceed?

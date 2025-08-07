@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import OtpVerificationForm from "./components/OtpVerificationForm";
-import authService from "@/services/authService";
 import toast from "@/components/ui/toast";
 import Notification from "@/components/ui/Notification";
 import { useAuth } from "@/auth";
+import AuthService from "@/services/AuthService";
 
 export const OtpVerificationBase = () => {
   const { user } = useAuth();
@@ -28,7 +28,7 @@ export const OtpVerificationBase = () => {
     setLoading(true);
 
     try {
-      const response = await authService.resendOtp({ username: phone });
+      const response = await AuthService.resendOtp({ username: phone });
 
       if (response.data?.success === true) {
         toast.push(
