@@ -1,0 +1,14 @@
+export const ROOT = "/";
+export const DASHBOARDS_PREFIX_PATH = "/dashboard";
+export const CONCEPTS_PREFIX_PATH = "/profile";
+export const AUTH_PREFIX_PATH = "/auth";
+export const UI_COMPONENTS_PREFIX_PATH = "/ui-components";
+export const PAGES_PREFIX_PATH = "/pages";
+export const GUIDE_PREFIX_PATH = "/guide";
+export const APPLICATION_PREFIX_PATH = "/applications";
+export const SETTINGS_PATH = "/settings-management";
+export const USER_MANAGEMENT_PATH = "/user-management";
+export const AWARD_MANAGEMENT_PATH = "/award-management";
+export const JUDGE_MANAGEMENT_PATH = "/judge-management";
+export const AWARD_REPORT_PATH = "/award-report";
+export const REVIEW_REPORT_PATH = "/review-report";
