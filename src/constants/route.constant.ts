@@ -12,3 +12,4 @@ export const AWARD_MANAGEMENT_PATH = "/award-management";
 export const JUDGE_MANAGEMENT_PATH = "/judge-management";
 export const AWARD_REPORT_PATH = "/award-report";
 export const REVIEW_REPORT_PATH = "/review-report";
+export const PROJECTS_PREFIX_PATH = "/projects";

@@ -9,6 +9,7 @@ import awardManagementRoute from "./awardManagementRoute";
 import judgeManagementRoute from "./judgeManagementRoute";
 import awardReportRoute from "./awardReport";
 import judgeReviewRoute from "./judgeReviewRoute";
+import projectsRoute from "./projectsRoute";
 
 export const publicRoutes: Routes = [...authRoute];
 
@@ -22,4 +23,5 @@ export const protectedRoutes: Routes = [
   ...awardReportRoute,
   ...judgeReviewRoute,
   ...settingsRoute,
+  ...projectsRoute,
 ];

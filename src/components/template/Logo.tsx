@@ -29,11 +29,16 @@ const Logo = (props: LogoProps) => {
         ...{ width: logoWidth },
       }}
     >
-      <img
-        className={imgClass}
-        src={`${LOGO_SRC_PATH}logo.jpeg`}
-        alt={`${APP_NAME} logo`}
-      />
+      <div className="flex m-2">
+        <img
+          className={imgClass}
+          src={`${LOGO_SRC_PATH}logo.jpeg`}
+          alt={`${APP_NAME} logo`}
+        />
+        <div className="hidden lg:block text-sm font-bold p-2 mx-2">
+          HAMASA ANALYTICS
+        </div>
+      </div>
     </div>
   );
 };

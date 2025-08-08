@@ -1,5 +1,4 @@
 import dashboardsNavigationConfig from "./dashboards.navigation.config";
-import uiComponentNavigationConfig from "./ui-components.navigation.config";
 import conceptsNavigationConfig from "./concepts.navigation.config";
 import authNavigationConfig from "./auth.navigation.config";
 import adminNavigationConfig from "./admin.navigation.config";
@@ -11,24 +10,15 @@ import judgeManagementNavigationConfig from "./judge-management.navigation.confi
 import awardReportNavigationConfig from "./award-report.naviigation.config";
 import judgeReviewNavigationConfig from "./judge-review-report.config";
 import mentorshipNavigationConfig from "./mentership.navigation.config";
-import assignmentsNavigationConfig from "./assignments.navigation.configs";
+import assignmentsNavigationConfig from "./projects.navigation.config";
 import progressNavigationConfig from "./progress.navigation.config";
 import learningNavigationConfig from "./learning.navigation.config";
+import projectsNavigationConfig from "./projects.navigation.config";
 //import applicationNavigationConfig from "./applications.navigation.config";
 
 const navigationConfig: NavigationTree[] = [
   ...dashboardsNavigationConfig,
-  ...judgeManagementNavigationConfig,
-  ...applicationNavConfig,
-  ...adminNavigationConfig,
-
-  ...awardReportNavigationConfig,
-  ...judgeReviewNavigationConfig,
-  ...mentorshipNavigationConfig,
-  ...assignmentsNavigationConfig,
-  ...progressNavigationConfig,
-  ...learningNavigationConfig,
-  ...conceptsNavigationConfig,
+  ...projectsNavigationConfig,
 ];
 
 export default navigationConfig;
