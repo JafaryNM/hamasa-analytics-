@@ -61,7 +61,7 @@ const BasicSetupForm = () => {
   };
 
   return (
-    <div className="m-4 p-4">
+    <Card className="">
       <div className="space-y-8">
         {/* Project Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,7 +101,7 @@ const BasicSetupForm = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

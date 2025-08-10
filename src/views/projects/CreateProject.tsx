@@ -7,13 +7,14 @@ import SourcesForm from "./SourcesForm";
 import ReportsForm from "./ReportsForm";
 // import CollaboratorsForm from "./CollaboratorsForm"
 import { Card } from "@/components/ui";
+import CollaboratorsForm from "./CollaoratorsForm";
 
 const steps = [
   "Basic Setup",
   "Thematic Areas",
   "Sources",
-  "Reports",
   "Collaborators",
+  "Reports",
 ];
 
 const CreateProject = () => {
@@ -40,14 +41,9 @@ const CreateProject = () => {
       case 2:
         return <SourcesForm />;
       case 3:
-        return <ReportsForm />;
+        return <CollaboratorsForm />;
       case 4:
-        return (
-          <div className="text-muted-foreground">
-            Collaborators form not implemented yet.
-          </div>
-          // return <CollaboratorsForm />
-        );
+        return <ReportsForm />;
       default:
         return null;
     }
@@ -58,7 +54,7 @@ const CreateProject = () => {
       {/* Page Header */}
       <div>
         <h2 className="text-2xl font-semibold">New Project</h2>
-        <p className="text-gray-600">
+        <p className="text-gray-600 my-4">
           Complete the steps below to set up a project to monitor and generate
           reports.
         </p>
