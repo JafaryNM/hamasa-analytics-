@@ -3,9 +3,10 @@ import React, { useState, useMemo, ChangeEvent } from "react";
 import Card from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import Radio from "@/components/ui/Radio";
+import Checkbox from "@/components/ui/Checkbox";
 
 type ReportsFormData = {
-  deliveryMethod: string;
+  deliveryMethods: string[]; // <-- multiple selections now
   reportPeriod: string;
   consultationFrequency: string;
 };
@@ -26,20 +27,34 @@ const CONSULTATION_FREQS = [
 
 const ReportsForm: React.FC = () => {
   const [formData, setFormData] = useState<ReportsFormData>({
-    deliveryMethod: "",
+    deliveryMethods: [],
     reportPeriod: "",
     consultationFrequency: "",
   });
 
-  const handleChange =
-    (field: keyof ReportsFormData) =>
+  // radios (single-select) handler
+  const handleRadioChange =
+    (field: "reportPeriod" | "consultationFrequency") =>
     (_checked: boolean, e: ChangeEvent<HTMLInputElement>) => {
       setFormData((prev) => ({ ...prev, [field]: e.target.value }));
     };
 
+  // checkboxes (multi-select) toggle
+  const toggleDeliveryMethod = (method: string, checked: boolean) => {
+    setFormData((prev) => {
+      const exists = prev.deliveryMethods.includes(method);
+      let next: string[];
+      if (checked && !exists) next = [...prev.deliveryMethods, method];
+      else if (!checked && exists)
+        next = prev.deliveryMethods.filter((m) => m !== method);
+      else next = prev.deliveryMethods;
+      return { ...prev, deliveryMethods: next };
+    });
+  };
+
   const canSubmit = useMemo(
     () =>
-      !!formData.deliveryMethod &&
+      formData.deliveryMethods.length > 0 &&
       !!formData.reportPeriod &&
       !!formData.consultationFrequency,
     [formData]
@@ -52,7 +67,7 @@ const ReportsForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className=" space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <Card className="p-6 space-y-8">
         {/* Header */}
         <div className="flex items-start md:items-center justify-between gap-3">
@@ -67,14 +82,20 @@ const ReportsForm: React.FC = () => {
           </div>
         </div>
 
-        {/* Delivery Method */}
+        {/* Delivery Method (MULTI-SELECT) */}
         <section className="space-y-3">
-          <h4 className="text-base font-semibold text-foreground">
-            Delivery Method
-          </h4>
+          <div className="flex items-center justify-between">
+            <h4 className="text-base font-semibold text-foreground">
+              Delivery Method
+            </h4>
+            <span className="text-[11px] px-2 py-1 rounded-full bg-muted text-foreground/70">
+              {formData.deliveryMethods.length} selected
+            </span>
+          </div>
+
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {DELIVERY_METHODS.map((method) => {
-              const selected = formData.deliveryMethod === method;
+              const selected = formData.deliveryMethods.includes(method);
               return (
                 <div
                   key={method}
@@ -82,14 +103,14 @@ const ReportsForm: React.FC = () => {
                     selected ? "border-primary/50 ring-1 ring-primary/30" : ""
                   }`}
                 >
-                  <Radio
-                    name="deliveryMethod"
-                    value={method}
+                  <Checkbox
                     checked={selected}
-                    onChange={handleChange("deliveryMethod")}
+                    onChange={(value: boolean) =>
+                      toggleDeliveryMethod(method, value)
+                    }
                   >
                     {method}
-                  </Radio>
+                  </Checkbox>
                 </div>
               );
             })}
@@ -99,7 +120,7 @@ const ReportsForm: React.FC = () => {
         {/* Divider */}
         <div className="h-px w-full bg-border" />
 
-        {/* Report Period */}
+        {/* Report Period (SINGLE-SELECT) */}
         <section className="space-y-3">
           <h4 className="text-base font-semibold text-foreground">
             Period for receiving analyzed report
@@ -118,7 +139,7 @@ const ReportsForm: React.FC = () => {
                     name="reportPeriod"
                     value={period}
                     checked={selected}
-                    onChange={handleChange("reportPeriod")}
+                    onChange={handleRadioChange("reportPeriod")}
                   >
                     {period}
                   </Radio>
@@ -131,10 +152,10 @@ const ReportsForm: React.FC = () => {
         {/* Divider */}
         <div className="h-px w-full bg-border" />
 
-        {/* Consultation Frequency */}
+        {/* Consultation Frequency (SINGLE-SELECT) */}
         <section className="space-y-3">
           <h4 className="text-base font-semibold text-foreground">
-            Frequency of consultation meetings with our expert
+            Frequency of consultation meetings with our experts
           </h4>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {CONSULTATION_FREQS.map((freq) => {
@@ -150,7 +171,7 @@ const ReportsForm: React.FC = () => {
                     name="consultationFrequency"
                     value={freq}
                     checked={selected}
-                    onChange={handleChange("consultationFrequency")}
+                    onChange={handleRadioChange("consultationFrequency")}
                   >
                     {freq}
                   </Radio>
