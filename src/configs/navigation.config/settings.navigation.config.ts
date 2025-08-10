@@ -14,7 +14,7 @@ const settingsNavigationConfig: NavigationTree[] = [
     translateKey: "nav.settings",
     icon: "accountSettings",
     type: NAV_ITEM_TYPE_COLLAPSE,
-    authority: [SUPER_ADMIN],
+    authority: [],
     meta: {
       horizontalMenu: {
         layout: "columns",
@@ -23,13 +23,13 @@ const settingsNavigationConfig: NavigationTree[] = [
     },
     subMenu: [
       {
-        key: "categories",
+        key: "colaborates",
         path: `${SETTINGS_PATH}/categories`,
-        title: "Categories",
+        title: "Collaborators",
         translateKey: "nav.settings-anagement.categories",
-        icon: "categories",
+        icon: "user",
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [SUPER_ADMIN, ADMIN],
+        authority: [],
         meta: {
           description: {
             translateKey: "nav.settings-anagement.Categories",
@@ -39,13 +39,13 @@ const settingsNavigationConfig: NavigationTree[] = [
         subMenu: [],
       },
       {
-        key: "criterias",
+        key: "Help",
         path: `${SETTINGS_PATH}/criterias`,
-        title: "Criterias",
+        title: "Help",
         translateKey: "nav.settings-anagement.criterias",
         icon: "criterias",
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [SUPER_ADMIN, ADMIN],
+        authority: [],
         meta: {
           description: {
             translateKey: "nav.settings-anagement.Criterias",
@@ -55,13 +55,13 @@ const settingsNavigationConfig: NavigationTree[] = [
         subMenu: [],
       },
       {
-        key: "expertises",
+        key: "Profile",
         path: `${SETTINGS_PATH}/expertises`,
-        title: "Expertises",
+        title: "Profile",
         translateKey: "nav.settings-anagement.Expertises",
         icon: "expertises",
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [SUPER_ADMIN, ADMIN],
+        authority: [],
         meta: {
           description: {
             translateKey: "nav.settings-anagement.Expertises",

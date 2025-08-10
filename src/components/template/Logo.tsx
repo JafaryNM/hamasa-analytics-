@@ -35,7 +35,7 @@ const Logo = (props: LogoProps) => {
           src={`${LOGO_SRC_PATH}logo.jpeg`}
           alt={`${APP_NAME} logo`}
         />
-        <div className="hidden lg:block text-sm font-bold p-2 mx-2">
+        <div className="hidden lg:hidden text-sm font-bold p-2 mx-2">
           HAMASA ANALYTICS
         </div>
       </div>

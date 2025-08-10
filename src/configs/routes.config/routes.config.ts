@@ -11,6 +11,7 @@ import awardReportRoute from "./awardReport";
 import judgeReviewRoute from "./judgeReviewRoute";
 import projectsRoute from "./projectsRoute";
 import reportProjects from "./reportsProjectsRoute";
+import requestRoute from "./requestRoute";
 
 export const publicRoutes: Routes = [...authRoute];
 
@@ -26,4 +27,5 @@ export const protectedRoutes: Routes = [
   ...settingsRoute,
   ...projectsRoute,
   ...reportProjects,
+  ...requestRoute,
 ];

@@ -1,2 +1,2 @@
-export const APP_NAME = "Union of Tanzania Press Clubs (UTPC)";
+export const APP_NAME = "Hamasa Analytics";
 export const REDIRECT_URL_KEY = "redirectUrl";

@@ -13,3 +13,4 @@ export const JUDGE_MANAGEMENT_PATH = "/judge-management";
 export const AWARD_REPORT_PATH = "/reports";
 export const REVIEW_REPORT_PATH = "/review-report";
 export const PROJECTS_PREFIX_PATH = "/projects";
+export const REQUEST_PREFIX_PATH = "/requests";
