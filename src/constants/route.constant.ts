@@ -10,6 +10,6 @@ export const SETTINGS_PATH = "/settings-management";
 export const USER_MANAGEMENT_PATH = "/user-management";
 export const AWARD_MANAGEMENT_PATH = "/award-management";
 export const JUDGE_MANAGEMENT_PATH = "/judge-management";
-export const AWARD_REPORT_PATH = "/award-report";
+export const AWARD_REPORT_PATH = "/reports";
 export const REVIEW_REPORT_PATH = "/review-report";
 export const PROJECTS_PREFIX_PATH = "/projects";

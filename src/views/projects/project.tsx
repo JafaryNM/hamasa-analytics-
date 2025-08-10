@@ -1,33 +1,44 @@
-import { useMemo, useState } from "react";
+// src/views/projects/project.tsx
+import React, { useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Col, Row, Table, Tag, Pagination } from "antd";
-import { TbPlus, TbSearch } from "react-icons/tb";
+import { Col, Row, Table, Tag, Pagination, Space, Tooltip } from "antd";
+import { TbPlus, TbSearch, TbEye, TbEdit, TbTrash } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
 import Container from "@/components/shared/Container";
 import AdaptiveCard from "@/components/shared/AdaptiveCard";
 import { Button, Select, DatePicker, Input } from "@/components/ui";
-import { Space, Tooltip } from "antd";
-import { TbEye, TbEdit, TbTrash } from "react-icons/tb";
 import moment from "moment";
 
-// Dummy project data
-const projectData = [
+type Project = {
+  uuid: string;
+  title: string;
+  category: string;
+  status: "active" | "archived" | "completed" | "in_review";
+  media: number;
+  startDate: string; // ISO
+  endDate: string; // ISO
+};
+
+// ✅ Demo data
+const projectData: Project[] = [
   {
     uuid: "1",
     title: "Empowering Journalists For Informed Communities",
-    category: "Jounalism",
+    category: "Journalism",
     status: "active",
     media: 3004,
-    createdAt: "2025-08-01",
+    startDate: "2025-08-01",
+    endDate: "2025-10-31",
   },
   {
     uuid: "2",
-    title: "Zanzibar 2025- Election",
+    title: "Zanzibar 2025 - Election",
     category: "Election",
-    media: 848585,
     status: "in_review",
-    createdAt: "2025-07-25",
+    media: 848585,
+    startDate: "2025-07-25",
+    endDate: "2025-11-15",
   },
   {
     uuid: "3",
@@ -35,7 +46,8 @@ const projectData = [
     category: "Health",
     status: "archived",
     media: 488448,
-    createdAt: "2025-07-20",
+    startDate: "2025-07-20",
+    endDate: "2026-01-10",
   },
 ];
 
@@ -43,6 +55,7 @@ const statusOptions = [
   { value: "active", label: "Active" },
   { value: "archived", label: "Archived" },
   { value: "completed", label: "Completed" },
+  { value: "in_review", label: "In Review" },
 ];
 
 const categoryOptions = [
@@ -51,105 +64,118 @@ const categoryOptions = [
   { value: "Journalism", label: "Journalism" },
 ];
 
-const typeOptions = [
-  { value: "tv", label: "TV" },
-  { value: "radio", label: "Radio" },
-  { value: "newspaper", label: "Newspaper" },
-  { value: "online", label: "Online" },
-];
-
-const ProjectsPage = () => {
+const ProjectsPage: React.FC = () => {
   const navigate = useNavigate();
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
-  const { control, handleSubmit, setValue, watch, reset } = useForm({
+  const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: {
       search: "",
-      startDate: null,
-      endDate: null,
+      startDate: null as any,
+      endDate: null as any,
       status: "",
       category: "",
       type: "",
     },
   });
 
+  // 👀 Watch current filter values
   const filters = watch();
 
+  // ✅ Define filteredData (this was missing)
   const filteredData = useMemo(() => {
-    let result = projectData;
+    let result = [...projectData];
 
+    // search by title
     if (filters.search) {
-      result = result.filter((item) =>
-        item.title.toLowerCase().includes(filters.search.toLowerCase())
-      );
+      const q = String(filters.search).toLowerCase();
+      result = result.filter((item) => item.title.toLowerCase().includes(q));
     }
 
+    // status
     if (filters.status) {
       result = result.filter((item) => item.status === filters.status);
     }
 
+    // category
     if (filters.category) {
-      result = result.filter(
-        (item) => item.category.toLowerCase() === filters.category
+      result = result.filter((item) => item.category === filters.category);
+    }
+
+    // date range (optional)
+    if (filters.startDate) {
+      const start = moment(filters.startDate).startOf("day");
+      result = result.filter((item) =>
+        moment(item.startDate).isSameOrAfter(start)
+      );
+    }
+    if (filters.endDate) {
+      const end = moment(filters.endDate).endOf("day");
+      result = result.filter((item) =>
+        moment(item.endDate).isSameOrBefore(end)
       );
     }
 
     return result;
   }, [filters]);
 
+  // ✅ Paginate filtered data
   const paginatedData = useMemo(() => {
     const start = (pagination.page - 1) * pagination.perPage;
     return filteredData.slice(start, start + pagination.perPage);
   }, [filteredData, pagination]);
 
+  const handleDelete = (uuid: string) => {
+    // TODO: confirm + call API
+    console.log("delete project", uuid);
+  };
+
   const columns = [
     {
       title: "S/N",
-      render: (_: any, __: any, index: number) => index + 1,
+      render: (_: any, __: any, index: number) =>
+        (pagination.page - 1) * pagination.perPage + index + 1,
+      width: 70,
     },
-    {
-      title: "Project Title",
-      dataIndex: "title",
-    },
-    {
-      title: "Media Items",
-      dataIndex: "media",
-    },
-    {
-      title: "Category",
-      dataIndex: "category",
-    },
+    { title: "Project Title", dataIndex: "title" },
+    { title: "Media Items", dataIndex: "media", width: 140 },
+    { title: "Category", dataIndex: "category", width: 140 },
     {
       title: "Start Date",
       dataIndex: "startDate",
       render: (date: string) => moment(date).format("DD MMM YYYY"),
+      width: 140,
     },
     {
       title: "End Date",
       dataIndex: "endDate",
       render: (date: string) => moment(date).format("DD MMM YYYY"),
+      width: 140,
     },
     {
       title: "Status",
       dataIndex: "status",
-      render: (status: string) => (
+      render: (status: Project["status"]) => (
         <Tag
           color={
             status === "active"
               ? "green"
               : status === "archived"
                 ? "red"
-                : "orange"
+                : status === "completed"
+                  ? "blue"
+                  : "orange"
           }
         >
           {status.replace(/_/g, " ")}
         </Tag>
       ),
+      width: 130,
     },
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: any) => (
+      render: (_: any, record: Project) => (
         <Space size="middle">
           <Tooltip title="View">
             <TbEye
@@ -171,15 +197,24 @@ const ProjectsPage = () => {
           </Tooltip>
         </Space>
       ),
+      width: 140,
     },
   ];
+
+  // Submit just resets page to 1 (you can add API call)
+  const onFilter = () => setPagination((p) => ({ ...p, page: 1 }));
+
+  const onReset = () => {
+    reset();
+    setPagination((p) => ({ ...p, page: 1 }));
+  };
 
   return (
     <Container>
       <AdaptiveCard>
         <div className="flex flex-col gap-4 m-12">
           {/* Filter Form */}
-          <form onSubmit={handleSubmit(() => {})}>
+          <form onSubmit={handleSubmit(onFilter)}>
             <Row gutter={[16, 16]}>
               <Col xs={24} sm={12} md={6}>
                 <Controller
@@ -246,23 +281,20 @@ const ProjectsPage = () => {
               <Col xs={24} sm={12} md={3}>
                 <div className="flex gap-2">
                   <Button type="submit">Filter</Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => reset()}
-                  >
+                  <Button type="button" variant="outline" onClick={onReset}>
                     Reset
                   </Button>
                 </div>
               </Col>
             </Row>
           </form>
+
           <hr className="border border-gray-100 dark:border-gray-700 my-4" />
+
           <div className="flex items-center justify-between">
-            <h3 className=" font-semibold text-2xl">
+            <h3 className="font-semibold text-2xl">
               Media Monitoring Projects Overview
             </h3>
-
             <Button
               icon={<TbPlus />}
               onClick={() => navigate("/projects/add")}

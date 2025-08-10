@@ -1,29 +1,38 @@
+// src/configs/routes/projects.route.ts
 import { lazy } from "react";
-import {
-  CONCEPTS_PREFIX_PATH,
-  PROJECTS_PREFIX_PATH,
-} from "@/constants/route.constant";
-import {} from "@/constants/roles.constant";
+import { PROJECTS_PREFIX_PATH } from "@/constants/route.constant";
 import type { Routes } from "@/@types/routes";
-import ProjectsPage from "@/views/projects/project";
 
-const projects = lazy(() => import("@/views/projects/project"));
-const projectsAdd = lazy(() => import("@/views/projects/CreateProject"));
+// Lazy pages
+const ProjectsList = lazy(() => import("@/views/projects/project"));
+const ProjectCreate = lazy(() => import("@/views/projects/CreateProject"));
+const ProjectDetails = lazy(() => import("@/views/projects/ProjectDetails")); // <-- fix
 
 const projectsRoute: Routes = [
   {
     key: "project.all",
-    path: `${PROJECTS_PREFIX_PATH}`,
-    component: projects,
+    path: `${PROJECTS_PREFIX_PATH}`, // e.g. "/projects"
+    component: ProjectsList,
     authority: [],
   },
-
   {
     key: "project.add",
     path: `${PROJECTS_PREFIX_PATH}/add`,
-    component: projectsAdd,
+    component: ProjectCreate,
     authority: [],
   },
+  {
+    key: "project.details",
+    path: `${PROJECTS_PREFIX_PATH}/details/:uuid`, // <-- dynamic segment
+    component: ProjectDetails,
+    authority: [],
+  },
+  //   {
+  //     key: "project.edit",
+  //     path: `${PROJECTS_PREFIX_PATH}/edit/:uuid`,
+  //     component: ProjectEdit,
+  //     authority: [],
+  //   },
 ];
 
 export default projectsRoute;

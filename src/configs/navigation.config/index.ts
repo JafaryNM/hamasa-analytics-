@@ -14,11 +14,13 @@ import assignmentsNavigationConfig from "./projects.navigation.config";
 import progressNavigationConfig from "./progress.navigation.config";
 import learningNavigationConfig from "./learning.navigation.config";
 import projectsNavigationConfig from "./projects.navigation.config";
+import projectsReportNavigationConfig from "./project-report.navigation.config";
 //import applicationNavigationConfig from "./applications.navigation.config";
 
 const navigationConfig: NavigationTree[] = [
   ...dashboardsNavigationConfig,
   ...projectsNavigationConfig,
+  ...projectsReportNavigationConfig,
 ];
 
 export default navigationConfig;
